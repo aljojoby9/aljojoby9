@@ -1,16 +1,26 @@
-## Hi there 👋
+# Hi, I'm Aljo Joby 👋
 
-<!--
-**aljojoby9/aljojoby9** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
+I’m a Computer Science and Engineering student focused on building practical developer tools, web applications, and AI integrations.
 
-Here are some ideas to get you started:
+## What I’m working on
 
-- 🔭 I’m currently working on ...
-- 🌱 I’m currently learning ...
-- 👯 I’m looking to collaborate on ...
-- 🤔 I’m looking for help with ...
-- 💬 Ask me about ...
-- 📫 How to reach me: ...
-- 😄 Pronouns: ...
-- ⚡ Fun fact: ...
--->
+- Building developer-friendly integrations with TypeScript and the Vercel AI SDK
+- Strengthening my foundations in Python, Java, Kotlin, and C
+- Contributing to open source — currently with an [open Bootstrap pull request](https://github.com/twbs/bootstrap/pull/42664)
+
+## Selected work
+
+| Project | Description | Stack |
+| --- | --- | --- |
+| [krutrim-ai-sdk](https://github.com/aljojoby9/krutrim-ai-sdk) | Krutrim Cloud provider for the Vercel AI SDK | TypeScript |
+| [QuickShare](https://github.com/aljojoby9/QuickShare) | A Kotlin project | Kotlin |
+| [maze_pathfinder](https://github.com/aljojoby9/maze_pathfinder) | Pathfinding project | Python |
+| [portfolio](https://github.com/aljojoby9/portfolio) | Personal portfolio site | CSS |
+
+## Technologies
+
+`TypeScript` · `Python` · `Java` · `Kotlin` · `C`
+
+## Find me here
+
+- GitHub: [@aljojoby9](https://github.com/aljojoby9)
