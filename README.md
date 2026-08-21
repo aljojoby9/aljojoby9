@@ -8,7 +8,7 @@
 -->
 
 <p align="center">
-  <img src="assets/led-header.svg" alt="ALJO JOBY LED matrix — present day, present time" width="100%" />
+  <img src="assets/led-header.png" alt="ALJO JOBY LED matrix — present day, present time" width="100%" />
 </p>
 
 <p align="center">
@@ -16,7 +16,7 @@
 </p>
 
 <p align="center">
-  <img src="assets/led-divider.svg" alt="" width="100%" />
+  <img src="assets/led-divider.png" alt="" width="100%" />
 </p>
 
 <p align="center">
@@ -61,13 +61,13 @@
 I live on the request/response boundary. Most of my open source time is spent making HTML sanitizers **fail closed** — `srcset`, `data:`, `vbscript:`, icon options that thought they were strings. The rest is developer tools, a little AGI-adjacent graph code, and whatever still compiles on a CRT in 2026.
 
 <p align="center">
-  <img src="assets/led-divider.svg" alt="" width="100%" />
+  <img src="assets/led-divider.png" alt="" width="100%" />
 </p>
 
 ## `./stack`
 
 <p align="center">
-  <img src="https://skillicons.dev/icons?i=js,ts,html,css,py,java,kotlin,c,cpp,linux,bash,git,github,vscode,nodejs,bootstrap&theme=dark" alt="JS TS HTML CSS Python Java Kotlin C C++ Linux Bash Git GitHub VS Code Node Bootstrap" />
+  <img src="https://skillicons.dev/icons?i=js,ts,html,css,py,java,kotlin,c,cpp,linux,bash,git,github,vscode,nodejs,bootstrap&theme=dark&perline=8" alt="JS TS HTML CSS Python Java Kotlin C C++ Linux Bash Git GitHub VS Code Node Bootstrap" />
 </p>
 
 ```text
@@ -78,7 +78,7 @@ watchlist   agentic tooling · fail-closed parsers · the Wired
 ```
 
 <p align="center">
-  <img src="assets/led-divider.svg" alt="" width="100%" />
+  <img src="assets/led-divider.png" alt="" width="100%" />
 </p>
 
 ## `./patches`  —  twbs/bootstrap
@@ -90,12 +90,10 @@ XSS in a UI kit is a ghost in the shell. These are the ones I filed:
 | open | [srcset URL validation, fail closed without DOMParser](https://github.com/twbs/bootstrap/pull/42840) | sanitizer refuses to guess |
 | open | [block `data:` / `vbscript:` URLs](https://github.com/twbs/bootstrap/pull/42806) | XSS hardening |
 | open | [collapse trigger state after hide](https://github.com/twbs/bootstrap/pull/42664) | UI state vs. reality |
-| closed | [sanitize HTML icon options](https://github.com/twbs/bootstrap/pull/42805) | chips / nav overflow |
-| closed | [nested submenu keyboard nav](https://github.com/twbs/bootstrap/pull/42699) | v6 menus |
-| closed | [sibling submenus left open](https://github.com/twbs/bootstrap/pull/42694) | focus escape |
+| merged | [sanitize HTML icon options](https://github.com/twbs/bootstrap/pull/42805) | chips / nav overflow |
 
 <p align="center">
-  <img src="assets/led-divider.svg" alt="" width="100%" />
+  <img src="assets/led-divider.png" alt="" width="100%" />
 </p>
 
 ## `./src`
@@ -110,22 +108,22 @@ XSS in a UI kit is a ghost in the shell. These are the ones I filed:
 | [MedicalRAG](https://github.com/aljojoby9/MedicalRAG) | retrieval-augmented answers, not vibes | Python |
 
 <p align="center">
-  <img src="assets/led-divider.svg" alt="" width="100%" />
+  <img src="assets/led-divider.png" alt="" width="100%" />
 </p>
 
 ## `./proc/stats`
 
 <p align="center">
-  <img src="https://github-readme-stats.vercel.app/api?username=aljojoby9&show_icons=true&hide_border=true&include_all_commits=true&bg_color=07090d&title_color=3dff8a&icon_color=e879f9&text_color=c8d6d0&ring_color=3dff8a" alt="GitHub stats" />
-  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=aljojoby9&layout=compact&hide_border=true&langs_count=8&bg_color=07090d&title_color=3dff8a&text_color=c8d6d0" alt="Top languages" />
+  <img src="https://github-readme-stats.anuraghazra1.vercel.app/api?username=aljojoby9&show_icons=true&hide_border=true&bg_color=07090d&title_color=3dff8a&icon_color=e879f9&text_color=c8d6d0&ring_color=3dff8a" alt="GitHub stats" />
+  <img src="https://github-readme-stats.anuraghazra1.vercel.app/api/top-langs/?username=aljojoby9&layout=compact&hide_border=true&langs_count=8&bg_color=07090d&title_color=3dff8a&text_color=c8d6d0" alt="Top languages" />
 </p>
 
 <p align="center">
-  <img src="https://streak-stats.demolab.com/?user=aljojoby9&hide_border=true&background=07090d&ring=3dff8a&fire=e879f9&currStreakLabel=3dff8a&sideLabels=c8d6d0&dates=8aa396&stroke=163226" alt="commit streak" />
+  <img src="https://streak-stats.demolab.com/?user=aljojoby9&hide_border=true&background=07090d&ring=3dff8a&fire=e879f9&currStreakLabel=3dff8a&sideLabels=c8d6d0&dates=8aa396" alt="commit streak" />
 </p>
 
 <p align="center">
-  <img src="https://github-profile-trophy.vercel.app/?username=aljojoby9&theme=matrix&no-frame=true&no-bg=true&column=6&margin-w=8&margin-h=8" alt="trophies" />
+  <img src="https://github-profile-trophy.screw-hand.vercel.app/?username=aljojoby9&theme=matrix&no-frame=true&no-bg=true&column=6&margin-w=8&margin-h=8" alt="trophies" />
 </p>
 
 <details>
@@ -149,7 +147,7 @@ uptime       compiling since 2023-08-08
 </details>
 
 <p align="center">
-  <img src="assets/led-divider.svg" alt="" width="100%" />
+  <img src="assets/led-divider.png" alt="" width="100%" />
 </p>
 
 ## `./worm`  —  contribution snake
