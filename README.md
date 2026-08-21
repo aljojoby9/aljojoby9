@@ -16,14 +16,14 @@
 </p>
 
 <p align="center">
-  <img src="assets/led-divider.png" alt="" width="100%" />
+  <img src="assets/led-divider.png" alt="phosphor LED divider" width="100%" />
 </p>
 
 <p align="center">
   <img src="assets/node-portrait.png" alt="dot-matrix phosphor portrait" width="180" />
 </p>
 
-<h1 align="center">aljo@wired:~$</h1>
+<h1 align="center"><code>aljo&#64;wired:~$</code></h1>
 
 <p align="center">
   <img src="https://readme-typing-svg.demolab.com?font=Share+Tech+Mono&weight=600&size=18&duration=2800&pause=900&color=3DFF8A&center=true&vCenter=true&width=720&lines=present+day%2C+present+time.;CSE+%C2%B7+systems+security+%C2%B7+JS%2FTS;XSS+%2F+DOM+sanitization+%C2%B7+fail+closed;contributor+%40twbs%2Fbootstrap;the+net+is+vast+and+infinite." alt="boot lines" />
@@ -61,7 +61,7 @@
 I live on the request/response boundary. Most of my open source time is spent making HTML sanitizers **fail closed** — `srcset`, `data:`, `vbscript:`, icon options that thought they were strings. The rest is developer tools, a little AGI-adjacent graph code, and whatever still compiles on a CRT in 2026.
 
 <p align="center">
-  <img src="assets/led-divider.png" alt="" width="100%" />
+  <img src="assets/led-divider.png" alt="phosphor LED divider" width="100%" />
 </p>
 
 ## `./stack`
@@ -78,7 +78,7 @@ watchlist   agentic tooling · fail-closed parsers · the Wired
 ```
 
 <p align="center">
-  <img src="assets/led-divider.png" alt="" width="100%" />
+  <img src="assets/led-divider.png" alt="phosphor LED divider" width="100%" />
 </p>
 
 ## `./patches`  —  twbs/bootstrap
@@ -93,7 +93,7 @@ XSS in a UI kit is a ghost in the shell. These are the ones I filed:
 | merged | [sanitize HTML icon options](https://github.com/twbs/bootstrap/pull/42805) | chips / nav overflow |
 
 <p align="center">
-  <img src="assets/led-divider.png" alt="" width="100%" />
+  <img src="assets/led-divider.png" alt="phosphor LED divider" width="100%" />
 </p>
 
 ## `./src`
@@ -108,7 +108,7 @@ XSS in a UI kit is a ghost in the shell. These are the ones I filed:
 | [MedicalRAG](https://github.com/aljojoby9/MedicalRAG) | retrieval-augmented answers, not vibes | Python |
 
 <p align="center">
-  <img src="assets/led-divider.png" alt="" width="100%" />
+  <img src="assets/led-divider.png" alt="phosphor LED divider" width="100%" />
 </p>
 
 ## `./proc/stats`
@@ -147,7 +147,7 @@ uptime       compiling since 2023-08-08
 </details>
 
 <p align="center">
-  <img src="assets/led-divider.png" alt="" width="100%" />
+  <img src="assets/led-divider.png" alt="phosphor LED divider" width="100%" />
 </p>
 
 ## `./worm`  —  contribution snake
@@ -163,6 +163,6 @@ uptime       compiling since 2023-08-08
 ---
 
 <p align="center">
-  <code>the net is vast and infinite.</code><br/>
+  <code>the net is vast and infinite.</code><br>
   <sub>see you, space cowboy...</sub>
 </p>

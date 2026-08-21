@@ -1,0 +1,6 @@
+# GitHub profile READMEs require HTML (centering, <picture>, <details>)
+# and badge URLs that cannot wrap at 80 columns.
+default: true
+MD013: false
+MD033: false
+MD041: false

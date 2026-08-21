@@ -1,4 +1,5 @@
 """Rasterize the LED-matrix header/divider so GitHub always displays them."""
+
 from __future__ import annotations
 
 from pathlib import Path
@@ -6,6 +7,7 @@ from pathlib import Path
 from PIL import Image, ImageDraw, ImageFilter
 
 OUT = Path(__file__).resolve().parents[1] / "assets"
+Color = tuple[int, int, int, int]
 
 F = {
     "A": ["01110", "10001", "10001", "11111", "10001", "10001", "10001"],
@@ -51,84 +53,159 @@ F = {
     "/": ["00001", "00010", "00010", "00100", "01000", "01000", "10000"],
 }
 
-ON = (61, 255, 138, 255)
-ON_CORE = (216, 255, 232, 255)
-MAGENTA = (232, 121, 249, 255)
-MAGENTA_CORE = (255, 220, 255, 255)
-OFF = (11, 26, 18, 255)
-PANEL = (7, 9, 13, 255)
-FRAME = (28, 58, 42, 255)
+ON: Color = (61, 255, 138, 255)
+ON_CORE: Color = (216, 255, 232, 255)
+MAGENTA: Color = (232, 121, 249, 255)
+MAGENTA_CORE: Color = (255, 220, 255, 255)
+OFF: Color = (11, 26, 18, 255)
+PANEL: Color = (7, 9, 13, 255)
+FRAME: Color = (28, 58, 42, 255)
+GAP_OFF_INDEX = 3
+HEADER_MARGIN = 40
+
+
+def _validate_font() -> None:
+    for char, rows in F.items():
+        if len(rows) != 7:
+            raise ValueError(f"glyph {char!r} must have 7 rows")
+        for row in rows:
+            if len(row) != 5 or set(row) - {"0", "1"}:
+                raise ValueError(f"glyph {char!r} has a bad row {row!r}")
+
+
+_validate_font()
 
 
 def text_size(text: str, pitch: int) -> tuple[int, int]:
+    """Return pixel width/height of a 5x7 LED string at the given pitch."""
     cols = len(text) * 5 + max(0, len(text) - 1)
     return cols * pitch, 7 * pitch
 
 
-def blit_led(img: Image.Image, text: str, origin: tuple[int, int], pitch: int, on=ON, core=ON_CORE) -> None:
+def blit_led(
+    img: Image.Image,
+    text: str,
+    origin: tuple[int, int],
+    pitch: int,
+    on: Color = ON,
+    core: Color = ON_CORE,
+) -> None:
+    """Draw a 5x7 LED string onto `img` at `origin`."""
     overlay = Image.new("RGBA", img.size, (0, 0, 0, 0))
     draw = ImageDraw.Draw(overlay)
     x0, y0 = origin
-    r = pitch * 0.34
+    radius = pitch * 0.34
     x = x0
-    for i, ch in enumerate(text):
-        glyph = F.get(ch, F[" "])
+    for char in text:
+        glyph = F[char]
         for row, bits in enumerate(glyph):
             for col, bit in enumerate(bits):
                 cx = x + (col + 0.5) * pitch
                 cy = y0 + (row + 0.5) * pitch
                 if bit == "1":
-                    draw.ellipse((cx - r, cy - r, cx + r, cy + r), fill=on)
                     draw.ellipse(
-                        (cx - r * 0.55, cy - r * 0.55, cx + r * 0.55, cy + r * 0.55),
+                        (cx - radius, cy - radius, cx + radius, cy + radius),
+                        fill=on,
+                    )
+                    inner = radius * 0.55
+                    draw.ellipse(
+                        (cx - inner, cy - inner, cx + inner, cy + inner),
                         fill=core,
                     )
                 else:
-                    draw.ellipse((cx - r * 0.72, cy - r * 0.72, cx + r * 0.72, cy + r * 0.72), fill=OFF)
+                    off_r = radius * 0.72
+                    draw.ellipse(
+                        (cx - off_r, cy - off_r, cx + off_r, cy + off_r),
+                        fill=OFF,
+                    )
         x += 6 * pitch
     glow = overlay.filter(ImageFilter.GaussianBlur(pitch * 0.18))
     img.alpha_composite(glow)
     img.alpha_composite(overlay)
 
 
-def render_header() -> None:
-    W, H = 2360, 620
-    img = Image.new("RGBA", (W, H), PANEL)
-    d = ImageDraw.Draw(img)
-    d.rounded_rectangle((0, 0, W - 1, H - 1), radius=28, outline=FRAME, width=4)
-    d.rounded_rectangle((20, 20, W - 21, H - 21), radius=16, outline=(22, 50, 38, 255), width=2)
+def _assert_fits(
+    label: str,
+    x: int,
+    y: int,
+    size: tuple[int, int],
+    canvas: tuple[int, int],
+) -> None:
+    width, height = size
+    canvas_w, canvas_h = canvas
+    if x < HEADER_MARGIN or y < HEADER_MARGIN:
+        raise ValueError(f"{label} collides with margin ({x},{y})")
+    if x + width > canvas_w - HEADER_MARGIN:
+        raise ValueError(f"{label} overflows horizontally ({x + width})")
+    if y + height > canvas_h - HEADER_MARGIN:
+        raise ValueError(f"{label} overflows vertically ({y + height})")
 
-    for x, y in ((48, 48), (W - 48, 48), (48, H - 48), (W - 48, H - 48)):
-        d.ellipse((x - 8, y - 8, x + 8, y + 8), fill=(42, 47, 51, 255), outline=(90, 100, 108, 255), width=2)
+
+def render_header() -> None:
+    """Write the profile LED-matrix banner."""
+    width, height = 2360, 620
+    img = Image.new("RGBA", (width, height), PANEL)
+    draw = ImageDraw.Draw(img)
+    draw.rounded_rectangle(
+        (0, 0, width - 1, height - 1),
+        radius=28,
+        outline=FRAME,
+        width=4,
+    )
+    draw.rounded_rectangle(
+        (20, 20, width - 21, height - 21),
+        radius=16,
+        outline=(22, 50, 38, 255),
+        width=2,
+    )
+
+    screws = (
+        (48, 48),
+        (width - 48, 48),
+        (48, height - 48),
+        (width - 48, height - 48),
+    )
+    for sx, sy in screws:
+        draw.ellipse(
+            (sx - 8, sy - 8, sx + 8, sy + 8),
+            fill=(42, 47, 51, 255),
+            outline=(90, 100, 108, 255),
+            width=2,
+        )
 
     title = "ALJO JOBY"
     sub = "PRESENT DAY  PRESENT TIME"
     stat = "NODE ALJOJOBY9  LAYER WIRED  FY 2026"
-    tp, sp, stp = 30, 14, 10
-    tw, th = text_size(title, tp)
-    sw, sh = text_size(sub, sp)
-    stw, sth = text_size(stat, stp)
+    title_pitch, sub_pitch, stat_pitch = 30, 14, 10
+    title_size = text_size(title, title_pitch)
+    sub_size = text_size(sub, sub_pitch)
+    stat_size = text_size(stat, stat_pitch)
+    canvas = (width, height)
 
-    blit_led(img, "ONLINE", (96, 40), 8)
-    blit_led(
-        img,
-        "WORLD LINE 1.048596",
-        (W - 40 - text_size("WORLD LINE 1.048596", 8)[0], 40),
-        8,
-        on=MAGENTA,
-        core=MAGENTA_CORE,
-    )
-    title_y = 110
-    sub_y = title_y + th + 24
-    stat_y = sub_y + sh + 24
-    blit_led(img, title, ((W - tw) // 2, title_y), tp)
-    blit_led(img, sub, ((W - sw) // 2, sub_y), sp, on=MAGENTA, core=MAGENTA_CORE)
-    blit_led(img, stat, ((W - stw) // 2, stat_y), stp)
+    online_origin = (96, 40)
+    world_label = "WORLD LINE 1.048596"
+    world_size = text_size(world_label, 8)
+    world_origin = (width - 40 - world_size[0], 40)
+    title_origin = ((width - title_size[0]) // 2, 110)
+    sub_origin = ((width - sub_size[0]) // 2, title_origin[1] + title_size[1] + 24)
+    stat_origin = ((width - stat_size[0]) // 2, sub_origin[1] + sub_size[1] + 24)
 
-    scan = Image.new("RGBA", (W, H), (0, 0, 0, 0))
-    sd = ImageDraw.Draw(scan)
-    for y in range(24, H - 24, 4):
-        sd.line((24, y, W - 24, y), fill=(61, 255, 138, 18), width=1)
+    _assert_fits("ONLINE", *online_origin, text_size("ONLINE", 8), canvas)
+    _assert_fits("worldline", *world_origin, world_size, canvas)
+    _assert_fits("title", *title_origin, title_size, canvas)
+    _assert_fits("subtitle", *sub_origin, sub_size, canvas)
+    _assert_fits("status", *stat_origin, stat_size, canvas)
+
+    blit_led(img, "ONLINE", online_origin, 8)
+    blit_led(img, world_label, world_origin, 8, on=MAGENTA, core=MAGENTA_CORE)
+    blit_led(img, title, title_origin, title_pitch)
+    blit_led(img, sub, sub_origin, sub_pitch, on=MAGENTA, core=MAGENTA_CORE)
+    blit_led(img, stat, stat_origin, stat_pitch)
+
+    scan = Image.new("RGBA", (width, height), (0, 0, 0, 0))
+    scan_draw = ImageDraw.Draw(scan)
+    for y in range(24, height - 24, 4):
+        scan_draw.line((24, y, width - 24, y), fill=(61, 255, 138, 18), width=1)
     img.alpha_composite(scan)
 
     out = img.convert("RGB")
@@ -138,20 +215,24 @@ def render_header() -> None:
 
 
 def render_divider() -> None:
-    W, H = 2360, 56
-    img = Image.new("RGBA", (W, H), PANEL)
-    overlay = Image.new("RGBA", (W, H), (0, 0, 0, 0))
-    d = ImageDraw.Draw(overlay)
+    """Write the repeating LED-dot divider."""
+    width, height = 2360, 56
+    img = Image.new("RGBA", (width, height), PANEL)
+    overlay = Image.new("RGBA", (width, height), (0, 0, 0, 0))
+    draw = ImageDraw.Draw(overlay)
     pitch = 20
-    cols = (W - 80) // pitch
+    cols = (width - 80) // pitch
     r_on, r_off = 6.2, 4.2
     for i in range(cols):
         cx = 40 + i * pitch + pitch / 2
-        cy = H / 2
-        if i % 4 != 3:
-            d.ellipse((cx - r_on, cy - r_on, cx + r_on, cy + r_on), fill=ON)
+        cy = height / 2
+        if i % 4 != GAP_OFF_INDEX:
+            draw.ellipse((cx - r_on, cy - r_on, cx + r_on, cy + r_on), fill=ON)
         else:
-            d.ellipse((cx - r_off, cy - r_off, cx + r_off, cy + r_off), fill=OFF)
+            draw.ellipse(
+                (cx - r_off, cy - r_off, cx + r_off, cy + r_off),
+                fill=OFF,
+            )
     glow = overlay.filter(ImageFilter.GaussianBlur(2.4))
     img.alpha_composite(glow)
     img.alpha_composite(overlay)
